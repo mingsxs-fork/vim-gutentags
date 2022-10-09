@@ -94,6 +94,14 @@ function! gutentags#gtags_cscope#generate(proj_dir, tags_file, gen_opts) abort
 
     " gtags doesn't honour GTAGSDBPATH and GTAGSROOT, so PWD and dbpath
     " have to be set
+    if exists("$GTAGSROOT")
+        let l:gtagsroot = $GTAGSROOT
+    elseif exists("*FindRootDirectory")
+        let l:gtagsroot = FindRootDirectory()
+    else
+        let l:gtagsroot = getcwd()
+    endif
+    let l:cmd += ['--directory', '"'.l:gtagsroot.'"']
     let l:db_path = fnamemodify(a:tags_file, ':p:h')
     let l:cmd += ['--incremental', '"'.l:db_path.'"']
 
