@@ -101,6 +101,10 @@ function! gutentags#gtags_cscope#generate(proj_dir, tags_file, gen_opts) abort
     else
         let l:gtagsroot = getcwd()
     endif
+    if exists('*trim')
+        let l:gtagsroot = trim(l:gtagsroot)
+    endif
+    let l:gtagsroot = substitute(l:gtagsroot, ' ', '\\ ', 'g')
     let l:cmd += ['--directory', '"'.l:gtagsroot.'"']
     let l:db_path = fnamemodify(a:tags_file, ':p:h')
     let l:cmd += ['--incremental', '"'.l:db_path.'"']
