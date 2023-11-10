@@ -77,7 +77,7 @@ function! gutentags#get_cachefile(root_dir, filename) abort
     if gutentags#is_path_rooted(a:filename)
         return a:filename
     endif
-    let l:tag_path = gutentags#stripslash(a:root_dir) . '/' . a:filename
+    let l:tag_path = gutentags#stripslash(a:root_dir) . a:filename
     if g:gutentags_cache_dir != ""
         " Put the tag file in the cache dir instead of inside the
         " project root.
