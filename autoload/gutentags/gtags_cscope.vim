@@ -78,8 +78,12 @@ function! gutentags#gtags_cscope#init(project_root) abort
 endfunction
 
 function! gutentags#gtags_cscope#generate(proj_dir, tags_file, gen_opts) abort
-    let l:cmd = [s:runner_exe]
-    let l:cmd += ['-e', '"' . g:gutentags_gtags_executable . '"']
+    if get(g:, 'gutentags_gtags_executable', 'gtags') == 'gtags'
+        let l:cmd = [g:gutentags_gtags_executable]
+    else
+        let l:cmd = [s:runner_exe]
+        let l:cmd += ['-e', '"' . g:gutentags_gtags_executable . '"']
+    endif
 
     let l:file_list_cmd = gutentags#get_project_file_list_cmd(a:proj_dir)
     if !empty(l:file_list_cmd)
@@ -108,6 +112,10 @@ function! gutentags#gtags_cscope#generate(proj_dir, tags_file, gen_opts) abort
     let l:cmd += ['--directory', '"'.l:gtagsroot.'"']
     let l:db_path = fnamemodify(a:tags_file, ':p:h')
     let l:cmd += ['--incremental', '"'.l:db_path.'"']
+    " add gtags verbose debugging info
+    if get(g:, 'gutentags_trace', 0)
+        let l:cmd += ['--verbose']
+    endif
 
     let l:cmd = gutentags#make_args(l:cmd)
 
