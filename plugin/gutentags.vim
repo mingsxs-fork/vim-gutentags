@@ -32,7 +32,10 @@ let g:gutentags_trace = get(g:, 'gutentags_trace', 0)
 let g:gutentags_fake = get(g:, 'gutentags_fake', 0)
 let g:gutentags_background_update = get(g:, 'gutentags_background_update', 1)
 let g:gutentags_pause_after_update = get(g:, 'gutentags_pause_after_update', 0)
-let g:gutentags_enabled = get(g:, 'gutentags_enabled', 1)
+let g:gutentags_ctags_enabled = get(g:, 'gutentags_ctags_enabled', 1)
+let g:gutentags_pycscope_enabled = get(g:, 'gutentags_pycscope_enabled', 1)
+let g:gutentags_gtags_cscope_enabled = get(g:, 'gutentags_gtags_cscope_enabled', 1)
+let g:gutentags_cscope_enabled = get(g:, 'gutentags_cscope_enabled', 1)
 let g:gutentags_modules = get(g:, 'gutentags_modules', ['ctags'])
 
 let g:gutentags_init_user_func = get(g:, 'gutentags_init_user_func', 
@@ -108,7 +111,7 @@ augroup end
 " Toggles and Miscellaneous Commands {{{
 
 if g:gutentags_define_advanced_commands
-    command! GutentagsToggleEnabled :let g:gutentags_enabled=!g:gutentags_enabled
+    command! GutentagsToggleEnabled :for module in g:gutentags_modules | exec 'let g:gutentags_'.module.'_enabled = !g:gutentags_'.module.'_enabled' | endfor
     command! GutentagsToggleTrace   :call gutentags#toggletrace()
 endif
 

@@ -64,11 +64,9 @@ function! gutentags#ctags#init(project_root) abort
 
     " Check if the ctags executable exists.
     if s:did_check_exe == 0
-        if g:gutentags_enabled && executable(expand(g:gutentags_ctags_executable, 1)) == 0
-            let g:gutentags_enabled = 0
+        if g:gutentags_ctags_enabled && executable(expand(g:gutentags_ctags_executable, 1)) == 0
+            let g:gutentags_ctags_enabled = 0
             echoerr "Executable '".g:gutentags_ctags_executable."' can't be found. "
-                        \."Gutentags will be disabled. You can re-enable it by "
-                        \."setting g:gutentags_enabled back to 1."
         endif
         let s:did_check_exe = 1
     endif

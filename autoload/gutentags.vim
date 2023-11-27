@@ -340,7 +340,7 @@ function! gutentags#setup_gutentags() abort
             call add(s:known_files, l:tagfile)
 
             " Generate this new file depending on settings and stuff.
-            if g:gutentags_enabled
+            if get(g:, "gutentags_".module."_enabled", 1)
                 if g:gutentags_generate_on_missing && !filereadable(l:tagfile)
                     call gutentags#trace("Generating missing tags file: " . l:tagfile)
                     call s:update_tags(l:bn, module, 1, 1)
@@ -499,9 +499,11 @@ endfunction
 
 " (Re)Generate the tags file for a buffer that just go saved.
 function! s:write_triggered_update_tags(bufno) abort
-    if g:gutentags_enabled && g:gutentags_generate_on_write
+    if g:gutentags_generate_on_write
         for module in g:gutentags_modules
-            call s:update_tags(a:bufno, module, 0, 2)
+            if get(g:, 'gutentags_'.module.'_enabled', 1)
+                call s:update_tags(a:bufno, module, 0, 2)
+            endif
         endfor
     endif
     silent doautocmd User GutentagsUpdating
