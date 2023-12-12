@@ -53,7 +53,7 @@ function! gutentags#gtags_cscope#init(project_root) abort
     let l:db_path = gutentags#get_cachefile(
                 \a:project_root, g:gutentags_gtags_dbpath)
     let l:db_path = gutentags#stripslash(l:db_path)
-    let l:db_file = l:db_path . '/GTAGS'
+    let l:db_file = fnamemodify(l:db_path, ':p') . 'GTAGS'
     let l:db_file = gutentags#normalizepath(l:db_file)
 
     if !isdirectory(l:db_path)
@@ -69,6 +69,7 @@ function! gutentags#gtags_cscope#init(project_root) abort
     " paths around and interpreting input correctly.
     let $GTAGSDBPATH = l:db_path
     let $GTAGSROOT = a:project_root
+    let $GTAGSLOGGING = fnamemodify(l:db_path, ':p') . 'GLOG'
 
     if g:gutentags_auto_add_gtags_cscope && 
                 \!has_key(s:added_db_files, l:db_file)
