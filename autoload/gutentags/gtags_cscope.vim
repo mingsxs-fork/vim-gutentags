@@ -68,7 +68,9 @@ function! gutentags#gtags_cscope#init(project_root) abort
     " paths around and interpreting input correctly.
     let $GTAGSDBPATH = l:db_path
     let $GTAGSROOT = a:project_root
-    let $GTAGSLOGGING = fnamemodify(l:db_path, ':p') . 'GLOG'
+    if get(g:, 'gutentags_trace', 0)
+        let $GTAGSLOGGING = fnamemodify(l:db_path, ':p') . 'GLOG'
+    endif
 
     if g:gutentags_auto_add_gtags_cscope && 
                 \!has_key(s:added_db_files, l:db_file)
