@@ -52,13 +52,12 @@ endfunction
 function! gutentags#gtags_cscope#init(project_root) abort
     let l:db_path = gutentags#get_cachefile(
                 \a:project_root, g:gutentags_gtags_dbpath)
-    let l:db_path = gutentags#stripslash(l:db_path)
-    let l:db_file = fnamemodify(l:db_path, ':p') . 'GTAGS'
-    let l:db_file = gutentags#normalizepath(l:db_file)
-
     if !isdirectory(l:db_path)
         call mkdir(l:db_path, 'p')
     endif
+    let l:db_path = gutentags#stripslash(l:db_path)
+    let l:db_file = fnamemodify(l:db_path, ':p') . 'GTAGS'
+    let l:db_file = gutentags#normalizepath(l:db_file)
 
     let b:gutentags_files['gtags_cscope'] = l:db_file
 
