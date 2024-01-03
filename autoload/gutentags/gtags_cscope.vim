@@ -121,7 +121,7 @@ function! gutentags#gtags_cscope#generate(proj_dir, tags_file, gen_opts) abort
 
     let l:cmd = gutentags#make_args(l:cmd)
 
-    call gutentags#trace("Running: " . string(l:cmd))
+    call gutentags#trace("Running: " . join(l:cmd, ' '))
     call gutentags#trace("In:      " . getcwd())
     if !g:gutentags_fake
         let l:job_opts = gutentags#build_default_job_options('gtags_cscope')
